@@ -4,5 +4,4 @@ Flask-Cors
 flask_socketio
 boto3
 pandas
-os
 dotenv
