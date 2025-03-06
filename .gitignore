@@ -32,3 +32,4 @@ server/__pycache__/aws_config.cpython-311.pyc
 server/initial_data_upload.py
 server/test3.py
 .gitignore
+server/index2.py
