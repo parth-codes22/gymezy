@@ -87,5 +87,5 @@ def set_interval():
     update_interval = max(1, int(data.get("interval", 10)))
     return jsonify({"message": f"Interval set to {update_interval} seconds"})
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000, debug=True)
