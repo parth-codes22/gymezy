@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Status Control</title>
+    <script>
+        async function startUpdating() {
+            await fetch('/start', { method: 'POST' });
+            alert("Started updating statuses.");
+        }
+
+        async function stopUpdating() {
+            await fetch('/stop', { method: 'POST' });
+            alert("Stopped updating statuses.");
+        }
+
+        async function setIntervalValue() {
+            let interval = document.getElementById("interval").value;
+            await fetch('/set_interval', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ interval: interval })
+            });
+            alert(`Interval set to ${interval} seconds.`);
+        }
+    </script>
+</head>
+<body>
+    <h2>Machine Status Control</h2>
+    <button onclick="startUpdating()">Start</button>
+    <button onclick="stopUpdating()">Stop</button>
+    <br><br>
+    <label for="interval">Set Interval (seconds):</label>
+    <input type="number" id="interval" value="10">
+    <button onclick="setIntervalValue()">Set Interval</button>
+</body>
+</html>

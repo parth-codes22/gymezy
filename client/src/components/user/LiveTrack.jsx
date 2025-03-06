@@ -142,7 +142,6 @@ import { CyclingIcon } from '../../assets/CyclingIcon';
 import { DumbbellsIcon } from '../../assets/DumbbellsIcon';
 import { RowingMachineIcon } from '../../assets/RowingMachineIcon';
 import axios from '../../axios';
-import axios from '../../axios';
 
 const LiveTrack = () => {
   const machineModel = useDisclosure();
@@ -224,24 +223,6 @@ const LiveTrack = () => {
     <div className="flex flex-col gap-4">
       <p className="text-2xl font-bold">Live Tracking</p>
       <div className="flex flex-wrap sm:flex-wrap justify-center sm:justify-start items-center gap-10 max-h-[80vh] overflow-y-auto">
-      {Object.entries(machineData).length !== 0 && Object.entries(machineData).map(([machineType, details]) => (
-        <Card key={machineType} className="bg-slate-200 dark:bg-slate-900">
-          <CardBody>
-            <Image
-              alt={machineType}
-              className="object-fit rounded-xl p-10 px-5"
-              src={machineType === "T" ? Treadmill : machineType === "C" ? Cyclying : machineType === "D" ? Dumbbell : Rowing}
-              width={200}
-            />
-            <div className="flex justify-around items-center">
-              <p className="font-bold">{machineType === "T" ? "Treadmill" : machineType === "C" ? "Cycling" : machineType === "D" ? "Dumbbells" : "Rowing"}</p>
-              <Button size="sm" color="primary" variant="shadow" onPress={() => {setModalHeader(machineType); setModalContent(details.data); machineModel.onOpen();}}>Check</Button>
-            </div>
-            <div className="absolute flex top-1 right-1">{details.totalAvailable !== 0 ? (<Chip color="success" variant="dot">Available</Chip>) : (<><Chip color="danger" variant="dot">Occupied</Chip> <Chip color="success" variant="faded">Est. Available Time: {details.estAvailableTime}</Chip></> )} </div>
-          </CardBody>
-        </Card>
-      ))}
-      
       {Object.entries(machineData).length !== 0 && Object.entries(machineData).map(([machineType, details]) => (
         <Card key={machineType} className="bg-slate-200 dark:bg-slate-900">
           <CardBody>
