@@ -7,6 +7,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { GlobalProvider } from "./contexts/GlobalContext.jsx";
 import {HeroUIProvider} from "@heroui/react";
+import { ThemeProvider as HeroThemesProvider } from "next-themes";
 import {ToastProvider} from "@heroui/toast";
 
 
@@ -15,8 +16,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true, }}>
       <GlobalProvider>
         <HeroUIProvider>
-          <ToastProvider />
-          <App />
+          <HeroThemesProvider attribute="class" defaultTheme="dark">
+            <ToastProvider />
+            <App />
+          </HeroThemesProvider>
         </HeroUIProvider>
       </GlobalProvider>
     </BrowserRouter>

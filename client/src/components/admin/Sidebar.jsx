@@ -7,6 +7,8 @@ import { cn } from "../ui/utils";
 import { useGlobalContext } from "../../contexts/GlobalContext";
 import { LogoutIcon } from "../../assets/LogoutIcon";
 import { useTheme } from "@heroui/use-theme";
+import SunIcon from "../../assets/SunIcon";
+import MoonIcon from "../../assets/MoonIcon";
 
 export function SidebarDemo({ links, outlet }) {
   const [open, setOpen] = useState(false);
@@ -32,7 +34,34 @@ export function SidebarDemo({ links, outlet }) {
           <div>
             <SidebarLink
               link={{
-                label: "Test User",
+                label: "Theme",
+                href: "#",
+                icon: (
+                  <Switch
+                    defaultSelected
+                    size="sm"
+                    color="primary"
+                    thumbIcon={({ isSelected, className }) =>
+                      !isSelected ? (
+                        <SunIcon className={className} />
+                      ) : (
+                        <MoonIcon className={className} />
+                      )
+                    }
+                    onChange={() => {
+                      if (theme === "light") {
+                        setTheme("dark");
+                      } else if (theme === "dark") {
+                        setTheme("light");
+                      }
+                    }}
+                  />
+                ),
+              }}
+            />
+            <SidebarLink
+              link={{
+                label: "Admin",
                 href: "#",
                 icon: (
                   <Image
@@ -45,7 +74,7 @@ export function SidebarDemo({ links, outlet }) {
               }} />
               <Link
                 className="flex items-center justify-start gap-2  group/sidebar py-2 text-red-600"
-                onClick={() => {logout(); setOpen();}}
+                onClick={() => {logout(); setOpen(false);}}
               >
                 <LogoutIcon />
                 <motion.span

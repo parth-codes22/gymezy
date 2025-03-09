@@ -33,3 +33,7 @@ server/initial_data_upload.py
 server/test3.py
 .gitignore
 server/index2.py
+server/sensor_data.xlsx
+server/Dummy_data.xlsx
+server/index3.py
+server/aws1.py
