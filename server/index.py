@@ -37,7 +37,7 @@ def convert_decimals(obj):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return "Welcome to GymEzy Backend Server"
 
 @app.route('/get_occupancy', methods=['GET'])
 def get_occupancy():
