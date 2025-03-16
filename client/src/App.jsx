@@ -59,16 +59,18 @@ const App = () => {
         </Route>
       </Route>
 
-      <Route path="/admin" element={<Admin />}>
-        <Route index element={<Navigate to="panel" replace />} />
-        <Route path="panel" element={<AdminPanel />}>
-          <Route path="livetrack" element={<AdminLiveTrack />} />
-          <Route path="logs" element={<PreviousLogs />} />
-          <Route path="manage" element={<ManagementTools />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/admin" element={<Admin />}>
+          <Route index element={<Navigate to="panel" replace />} />
+          <Route path="panel" element={<AdminPanel />}>
+            <Route path="livetrack" element={<AdminLiveTrack />} />
+            <Route path="logs" element={<PreviousLogs />} />
+            <Route path="manage" element={<ManagementTools />} />
+          </Route>
+          <Route path="permissions" element={<Permissions />}/>
+          <Route path="configure" element={<AdminSettings />}/>
         </Route>
-        <Route path="permissions" element={<Permissions />}/>
-        <Route path="configure" element={<AdminSettings />}/>
-      </Route>
+      </Route>  
     </Routes>
   )
 }
