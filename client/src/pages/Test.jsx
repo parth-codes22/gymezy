@@ -60,7 +60,7 @@ const Test = () => {
               <div className="w-full flex sm:flex-row flex-col justify-around">
                 <div className="p-5 text-green-600 bg-green-600/30 rounded-3xl h-fit w-44 flex flex-col justify-between align-middle items-center gap-5">
                   <IrSensorIcon className="h-24 w-24" />
-                  <strong className={`text-xl ${latestData.irSensor.reading < 45 ? "text-warning-400" : "text-white"}`}>{latestData.irSensor.reading} cm</strong>
+                  <strong className={`text-xl ${latestData.ultrasonic_sensor.reading < 45 ? "text-warning-400" : "text-white"}`}>{latestData.ultrasonic_sensor.reading} cm</strong>
                   <p className="font-bold">UltraSonic Sensor</p>
                 </div>
                 <div className="flex flex-col gap-3 justify-center align-middle items-center">
@@ -121,8 +121,8 @@ const Test = () => {
                     {data.length !== 0 && data.map((item, index) => (
                       <TableRow key={index}>
                         <TableCell>{item.equipmentId}</TableCell>
-                        <TableCell>{item.irSensor?.reading || "--"}</TableCell>
-                        <TableCell>{item.irSensor.status}</TableCell>
+                        <TableCell>{item.ultrasonic_sensor?.reading || "--"}</TableCell>
+                        <TableCell>{item.ultrasonic_sensor.status}</TableCell>
                         <TableCell className={`p-2 bg-slate-800 font-bold ${item.led === "green" ? "text-green-500" : item.led === "blue" ? "text-blue-500" : "text-red-500"}`}>
                           {item.led}
                         </TableCell>
