@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Button, Input, Checkbox, NumberInput } from "@heroui/react";
+import { Button, Input, Checkbox, NumberInput, Image } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
 import { MaleIcon } from "../assets/MaleIcon";
 import { FemaleIcon } from "../assets/FemaleIcon";
 import { OtherGenderIcon } from "../assets/OtherGenderIcon";
+import GymLogo from '../assets/logo.jpg';
 import axios from '../axios';
 
 export default function Register() {
@@ -55,7 +56,8 @@ export default function Register() {
   };
 
   return (
-    <div className="flex h-full w-full items-center justify-center">
+    <div className="flex h-full w-full flex-wrap gap-10 items-center justify-center">
+      <Image src={GymLogo} width={300} height={300} />
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large px-8 pb-10 pt-6">
         <p className="pb-4 text-left text-3xl font-semibold">Sign Up 👋</p>
         {error && <p className="text-red-500">{error}</p>}

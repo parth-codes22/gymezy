@@ -1,9 +1,8 @@
 import os
-import random
 import decimal
 import boto3
 import pandas as pd
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 import pandas as pd
@@ -21,9 +20,7 @@ dynamodb = boto3.resource(
     aws_secret_access_key=os.getenv('AWS_SECRET_KEY_DB'),
     region_name=os.getenv('AWS_REGION_DB'),
 )
-
-table_name = 'GymManagement'
-table = dynamodb.Table(table_name)
+log_table = dynamodb.Table("GymLogs")
 
 def convert_decimals(obj):
     """ Recursively converts DynamoDB Decimal values to int or float """
@@ -39,22 +36,26 @@ def convert_decimals(obj):
 def index():
     return "Welcome to GymEzy Backend Server"
 
-@app.route('/get_occupancy', methods=['GET'])
-def get_occupancy():
-    machines = table.scan().get('Items', [])
+@app.route("/get_update", methods=["GET"])
+def get_update():
+    """Returns the latest collected data."""
+    response = log_table.scan(
+        TableName="GymLogs",
+    )
     
-    for machine in machines:
-        new_status = random.choice([0, 1])
-        table.update_item(
-            Key={'ID': machine['ID']},
-            UpdateExpression='SET #st = :val',
-            ExpressionAttributeNames={'#st': 'Status'},
-            ExpressionAttributeValues={':val': decimal.Decimal(new_status)}
-        )
+    items = response.get('Items', [])
     
-    updated_machines = convert_decimals(table.scan().get('Items', []))
-    return jsonify(updated_machines)
-
+    def get_log_id(item):
+        log_id = item.get('LogID')
+        if isinstance(log_id, dict) and 'N' in log_id:
+            return int(log_id['N'])
+        elif isinstance(log_id, decimal.Decimal):
+            return int(log_id)
+        return 0
+    
+    sorted_logs = sorted(items, key=get_log_id, reverse=True)
+    
+    return jsonify(sorted_logs), 200
 
 users_data = pd.DataFrame({
     "ID": [1, 2, 3, 4, 5],

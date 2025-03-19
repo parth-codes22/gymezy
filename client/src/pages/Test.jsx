@@ -10,8 +10,7 @@ import {
   ModalBody,
   useDisclosure,
 } from "@heroui/react";
-
-const API_URL = "https://parthcodes-test-gym-backend.hf.space";
+import axios from '../axios';
 
 const Test = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -19,22 +18,17 @@ const Test = () => {
   const [latestData, setLatestData] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/start_simulation`, { method: "POST" })
-      .then((res) => res.json())
-      .then((data) => console.log("Simulation Started:", data))
-      .catch((err) => console.error("Error starting simulation:", err));
-
     const interval = setInterval(() => {
-      fetch(`${API_URL}/get_update`)
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data);
-          setLatestData(data[data.length-1]);
-          console.log(data);
+      axios
+        .get("/get_update")
+        .then((res) => {
+          setData(res.data);
+          setLatestData(res.data[res.data.length - 1]);
+          console.log(res.data);
         })
         .catch((err) => console.error("Error fetching data:", err));
-    }, 2000);
-
+    }, 5000);
+  
     return () => clearInterval(interval);
   }, []);
 

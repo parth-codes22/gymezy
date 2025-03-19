@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input, Checkbox, Form } from "@heroui/react";
+import { Button, Input, Checkbox, Form, Image } from "@heroui/react";
 import { addToast } from "@heroui/toast";
 import { Icon } from "@iconify/react";
+import GymLogo from '../assets/logo.jpg';
 import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import axios from "../axios";
@@ -60,7 +61,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex h-full w-full items-center justify-center">
+    <div className="flex h-full w-full flex-wrap gap-10 items-center justify-center">
+      <Image src={GymLogo} width={300} height={300} />
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large px-8 pb-10 pt-6">
         <p className="pb-4 text-left text-3xl font-semibold">
           Log In
