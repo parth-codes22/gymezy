@@ -1,5 +1,6 @@
 import os
 import decimal
+import random
 import boto3
 import pandas as pd
 from flask import Flask, jsonify, request
@@ -21,6 +22,8 @@ dynamodb = boto3.resource(
     region_name=os.getenv('AWS_REGION_DB'),
 )
 log_table = dynamodb.Table("GymLogs")
+table_name = 'GymManagement'
+table = dynamodb.Table(table_name)
 
 def convert_decimals(obj):
     """ Recursively converts DynamoDB Decimal values to int or float """
@@ -35,6 +38,22 @@ def convert_decimals(obj):
 @app.route('/')
 def index():
     return "Welcome to GymEzy Backend Server"
+
+@app.route('/get_occupancy', methods=['GET'])
+def get_occupancy():
+    machines = table.scan().get('Items', [])
+    
+    for machine in machines:
+        new_status = random.choice([0, 1])
+        table.update_item(
+            Key={'ID': machine['ID']},
+            UpdateExpression='SET #st = :val',
+            ExpressionAttributeNames={'#st': 'Status'},
+            ExpressionAttributeValues={':val': decimal.Decimal(new_status)}
+        )
+    
+    updated_machines = convert_decimals(table.scan().get('Items', []))
+    return jsonify(updated_machines)
 
 @app.route("/get_update", methods=["GET"])
 def get_update():
