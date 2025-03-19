@@ -72,7 +72,7 @@ def get_update():
             return int(log_id)
         return 0
     
-    sorted_logs = sorted(items, key=get_log_id, reverse=True)
+    sorted_logs = sorted(items, key=get_log_id)
     
     return jsonify(sorted_logs), 200
 
