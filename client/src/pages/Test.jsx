@@ -104,8 +104,8 @@ const Test = () => {
                 <Table isStriped aria-label="User logs">
                   <TableHeader>
                     <TableColumn>Equipment ID</TableColumn>
-                    <TableColumn>IR Sensor Reading</TableColumn>
-                    <TableColumn>IR Sensor Status</TableColumn>
+                    <TableColumn>Ultrasonic Sensor Reading</TableColumn>
+                    <TableColumn>Ultrasonic Sensor Status</TableColumn>
                     <TableColumn>LED Status</TableColumn>
                     <TableColumn>Message</TableColumn>
                     <TableColumn>Status</TableColumn>
