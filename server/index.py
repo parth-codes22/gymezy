@@ -5,7 +5,7 @@ import random
 import uuid
 import bcrypt
 import boto3
-import jwt
+import jwt as pyjwt
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -161,7 +161,7 @@ def login():
 
     # Generate JWT Token with 2-day expiration
     expiration_time = datetime.utcnow() + timedelta(days=2)
-    token = jwt.encode({"id": user["ID"], "email": user["Email"], "role": user["Role"], "exp": expiration_time}, SECRET_KEY, algorithm="HS256")
+    token = pyjwt.encode({"id": user["ID"], "email": user["Email"], "role": user["Role"], "exp": expiration_time}, SECRET_KEY, algorithm="HS256")
 
     return jsonify({"message": "Login successful", "token": token, "user": {"id": user["ID"], "username": user["Username"]}}), 200
 
