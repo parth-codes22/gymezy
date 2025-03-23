@@ -5,4 +5,3 @@ boto3
 pandas
 dotenv
 bcrypt
-jwt
