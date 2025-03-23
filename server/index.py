@@ -165,5 +165,5 @@ def login():
 
     return jsonify({"message": "Login successful", "token": token, "user": {"id": user["ID"], "username": user["Username"]}}), 200
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000, debug=True)
