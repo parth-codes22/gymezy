@@ -4,3 +4,5 @@ Flask-Cors
 boto3
 pandas
 dotenv
+bcrypt
+jwt
