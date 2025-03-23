@@ -8,7 +8,7 @@ import { OtherGenderIcon } from "../assets/OtherGenderIcon";
 import GymLogo from '../assets/logo.jpg';
 import axios from '../axios';
 
-export default function Register() {
+export default function  Register() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,7 +36,7 @@ export default function Register() {
     }
 
     try {
-      const response = await axios.post("/signup", {
+      const response = await axios.post("/register", {
         name: formData.name,
         email: formData.email,
         gender: formData.gender,

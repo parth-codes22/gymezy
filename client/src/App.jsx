@@ -57,9 +57,6 @@ const App = () => {
           <Route path="profile" element={<Profile />}/>
           <Route path="settings" element={<Settings />}/>
         </Route>
-      </Route>
-
-      <Route element={<ProtectedRoute />}>
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Navigate to="panel" replace />} />
           <Route path="panel" element={<AdminPanel />}>
@@ -70,7 +67,7 @@ const App = () => {
           <Route path="permissions" element={<Permissions />}/>
           <Route path="configure" element={<AdminSettings />}/>
         </Route>
-      </Route>  
+      </Route>
     </Routes>
   )
 }

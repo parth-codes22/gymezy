@@ -4,22 +4,54 @@ import React from 'react'
 const PreviousLogs = () =>  {
   const data = [
     {
-      timestamp: "13:30:41",
-      equipmentType: "Treadmill",
-      equipmentId: "T01",
-      ultrasonicReading: "41.31769751 cm",
-      loadSensorReading: "0 KG",
+      timestamp: "13:32:15",
+      equipmentType: "Bench Press",
+      equipmentId: "B02",
+      ultrasonicReading: "50.567893 cm",
+      loadSensorReading: "60.234567 KG",
       occupancyStatus: "1 (Occupied)"
     },
     {
-      timestamp: "13:30:41",
-      equipmentType: "Dumbbell",
-      equipmentId: "D01",
-      ultrasonicReading: "100 cm",
-      loadSensorReading: "80.90902666 KG",
+      timestamp: "13:33:05",
+      equipmentType: "Squat Rack",
+      equipmentId: "S01",
+      ultrasonicReading: "120 cm",
+      loadSensorReading: "0 KG",
+      occupancyStatus: "0 (Available)"
+    },
+    {
+      timestamp: "13:33:45",
+      equipmentType: "Leg Press",
+      equipmentId: "L01",
+      ultrasonicReading: "42.876543 cm",
+      loadSensorReading: "95.123456 KG",
+      occupancyStatus: "1 (Occupied)"
+    },
+    {
+      timestamp: "13:34:20",
+      equipmentType: "Pull-up Bar",
+      equipmentId: "PB01",
+      ultrasonicReading: "150 cm",
+      loadSensorReading: "0 KG",
+      occupancyStatus: "0 (Available)"
+    },
+    {
+      timestamp: "13:35:10",
+      equipmentType: "Rowing Machine",
+      equipmentId: "RM02",
+      ultrasonicReading: "38.987654 cm",
+      loadSensorReading: "30.567890 KG",
+      occupancyStatus: "1 (Occupied)"
+    },
+    {
+      timestamp: "13:36:02",
+      equipmentType: "Elliptical",
+      equipmentId: "E01",
+      ultrasonicReading: "110 cm",
+      loadSensorReading: "0 KG",
       occupancyStatus: "0 (Available)"
     }
-  ];
+  ];  
 
   return (
     <div>

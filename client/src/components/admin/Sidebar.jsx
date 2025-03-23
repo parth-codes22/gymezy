@@ -65,7 +65,7 @@ export function SidebarDemo({ links, outlet }) {
                 href: "#",
                 icon: (
                   <Image
-                    src="https://avatar.iran.liara.run/public/55"
+                    src="https://i.pravatar.cc/150?img=36"
                     className="h-5 w-7 flex-shrink-0 rounded-full"
                     width={50}
                     height={30}

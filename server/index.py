@@ -1,12 +1,14 @@
+from datetime import datetime, timedelta
 import os
 import decimal
 import random
+import uuid
+import bcrypt
 import boto3
-import pandas as pd
+import jwt
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
-import pandas as pd
 
 # Load environment variables
 load_dotenv()
@@ -76,20 +78,92 @@ def get_update():
     
     return jsonify(sorted_logs), 200
 
-users_data = pd.DataFrame({
-    "ID": [1, 2, 3, 4, 5],
-    "Username": ["alice01", "bob22", "charlie3", "david_d", "eve.e"],
-    "Password": ["pass123", "bob@321", "charlie!23", "david$pass", "eve#123"]
-})
+
+# JWT Secret Key
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your_secret_key")
+
+users_table = dynamodb.Table("GymUsers")  # Your DynamoDB users table
+
+def hash_password(password):
+    """Hash password before storing in DynamoDB"""
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode("utf-8"), salt).decode("utf-8")
+
+def check_password(password, hashed):
+    """Check if entered password matches stored hash"""
+    return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
+
+
+@app.route("/register", methods=["POST"])
+def register():
+    """Registers a new user and stores data in DynamoDB"""
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+    email = data.get("email")
+    gender = data.get('gender')
+    age = data.get('age')
+    name = data.get('name')
+
+    if not username or not password or not email:
+        return jsonify({"message": "All fields are required"}), 400
+
+    # Check if user already exists
+    response = users_table.scan(
+        FilterExpression="Username = :username OR Email = :email",
+        ExpressionAttributeValues={":username": username, ":email": email}
+    )
+    if response.get("Items"):  # If any existing user is found
+        return jsonify({"message": "Username or Email already exists"}), 409
+
+    # Generate unique MemberID (UUID)
+    member_id = str(uuid.uuid4())
+
+    # Store user in DynamoDB
+    users_table.put_item(
+        Item={
+            "ID": member_id,
+            "Username": username,
+            "Email": email,
+            "Password": hash_password(password),
+            "Name": name,
+            "Gender": gender,
+            "Age": age,
+            "CreatedAt": datetime.utcnow().isoformat(),
+            "Role": "user"
+        }
+    )
+
+    return jsonify({"message": "User registered successfully", "member_id": member_id}), 201
 
 @app.route("/login", methods=["POST"])
 def login():
+    """Authenticates user and returns a JWT token"""
     data = request.json
-    user = users_data[(users_data["Username"] == data["username"]) & (users_data["Password"] == data["password"])]
-    if not user.empty:
-        return jsonify({"message": "Login successful", "user_id": int(user.iloc[0]["ID"])}), 200
-    return jsonify({"message": "Invalid credentials"}), 401
+    username = data.get("username")
+    password = data.get("password")
 
+    if not username or not password:
+        return jsonify({"message": "Username and password are required"}), 400
 
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=5000, debug=True)
+    # Fetch user from DynamoDB
+    response = users_table.scan(FilterExpression="Username = :username", ExpressionAttributeValues={":username": username})
+    users = response.get("Items", [])
+
+    if not users:
+        return jsonify({"message": "Invalid credentials"}), 401
+
+    user = users[0]  # Get first matching user
+
+    # Verify password
+    if not check_password(password, user["Password"]):
+        return jsonify({"message": "Invalid credentials"}), 401
+
+    # Generate JWT Token with 2-day expiration
+    expiration_time = datetime.utcnow() + timedelta(days=2)
+    token = jwt.encode({"id": user["ID"], "email": user["Email"], "role": user["Role"], "exp": expiration_time}, SECRET_KEY, algorithm="HS256")
+
+    return jsonify({"message": "Login successful", "token": token, "user": {"id": user["ID"], "username": user["Username"]}}), 200
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

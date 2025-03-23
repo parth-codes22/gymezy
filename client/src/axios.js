@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const debug = localStorage.getItem("debug");
-const url = "https://gymezy-backend.vercel.app"; 
+const url = "http://localhost:5000"; 
 
 const instance = axios.create({
   baseURL: url,

@@ -57,7 +57,7 @@ const AdminPanel = () => {
             <div className="pb-0 pt-2 px-4 h-full flex flex-col justify-center items-start">
               <p className="text-tiny uppercase font-bold">Daily Mix</p>
               <small className="text-default-500">12 Tracks</small>
-              <h4 className="font-bold text-large">Management Tools</h4>
+              <h4 className="font-bold text-large">Gym Live Management</h4>
             </div>
             <div className="absolute bottom-0 left-0 w-full md:top-0 md:right-0 md:left-auto font-black md:h-full md:w-3 flex justify-center items-center rounded-full p-1 opacity-0 group-hover:opacity-100 group-hover:bg-green-600 transition-all">&gt;</div>
           </CardBody>
