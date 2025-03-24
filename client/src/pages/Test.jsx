@@ -82,7 +82,7 @@ const Test = () => {
                     <TableRow key={index}>
                       <TableCell>{item.equipmentId}</TableCell>
                       <TableCell className={`font-bold ${item.led === "green" ? "text-green-500" : item.led === "blue" ? "text-blue-500" : "text-red-500"}`}>
-                        {item.led === "green" ? "G" : item.led === "blue" ? "B" : "R"}
+                        {item.led === "green" ? "Green" : item.led === "blue" ? "Blue" : "Red"}
                       </TableCell>
                       <TableCell>{item.message}</TableCell>
                     </TableRow>
@@ -118,7 +118,7 @@ const Test = () => {
                         <TableCell>{item.ultrasonic_sensor?.reading || "--"}</TableCell>
                         <TableCell>{item.ultrasonic_sensor.status}</TableCell>
                         <TableCell className={`font-bold ${item.led === "green" ? "text-green-500" : item.led === "blue" ? "text-blue-500" : "text-red-500"}`}>
-                          {item.led === "green" ? "G" : item.led === "blue" ? "B" : "R"}
+                          {item.led === "green" ? "Green" : item.led === "blue" ? "Blue" : "Red"}
                         </TableCell>
                         <TableCell>{item.message}</TableCell>
                         <TableCell>{item.status}</TableCell>
