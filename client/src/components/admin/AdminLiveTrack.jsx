@@ -95,6 +95,24 @@ const AdminLiveTrack = () => {
       });
     }
   };
+
+  const [data, setData] = useState([]);
+  const [latestData, setLatestData] = useState(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      axios
+        .get("/get_update")
+        .then((res) => {
+          setData(res.data);
+          setLatestData(res.data[res.data.length - 3]);
+          console.log(res.data);
+        })
+        .catch((err) => console.error("Error fetching data:", err));
+    }, 5000);
+  
+    return () => clearInterval(interval);
+  }, []);
   
   return (
     <div className="flex flex-col gap-4">
@@ -135,6 +153,17 @@ const AdminLiveTrack = () => {
                   {modalHeader === "T" ? "Treadmill" : modalHeader === "C" ? "Cycling" : modalHeader === "D" ? "Dumbbells" : "Rowing"} Status <Chip color="success" variant="dot">Live</Chip>
                 </ModalHeader>
                 <ModalBody className="w-full max-w-[90vw] max-h-[60vh] overflow-y-auto flex flex-wrap">
+                  {latestData !== null && latestData !== undefined && latestData.equipmentId === "T-01" && (
+                    <div key={"unique"} className="flex flex-col items-center gap-2">
+                      {latestData.userID !== "" && (
+                        <Chip color="primary" startContent={<Image width={20} height={20} src={`https://gym-sensore-bucket.s3.ap-south-1.amazonaws.com/${latestData.userID.toLowerCase()}.jpeg`} alt="S3 Image" />} variant="faded">
+                          {latestData.userID}
+                        </Chip>
+                      )}
+                      <Card className="bg-slate-200 dark:bg-slate-800 p-5"><TreadmillIcon className={latestData.led === "green" ? "text-green-600" : latestData.led === "blue" ? "text-blue-600" : "text-red-600"} /></Card>
+                      <p>T-00</p>
+                    </div>
+                  )}
                   {modalContent.map((machine) => (
                     <div key={machine.machineID} className="flex flex-col items-center gap-2">
                       <Card className="bg-slate-200 dark:bg-slate-800 p-5">
