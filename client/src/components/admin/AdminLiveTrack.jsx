@@ -153,7 +153,7 @@ const AdminLiveTrack = () => {
                   {modalHeader === "T" ? "Treadmill" : modalHeader === "C" ? "Cycling" : modalHeader === "D" ? "Dumbbells" : "Rowing"} Status <Chip color="success" variant="dot">Live</Chip>
                 </ModalHeader>
                 <ModalBody className="w-full max-w-[90vw] max-h-[60vh] overflow-y-auto flex flex-wrap">
-                  {latestData !== null && latestData !== undefined && latestData.equipmentId === "T-01" && (
+                  {latestData !== null && latestData !== undefined && modalHeader === "T" && (
                     <div key={"unique"} className="flex flex-col items-center gap-2">
                       {latestData.userID !== "" && (
                         <Chip color="primary" startContent={<Image width={20} height={20} src={`https://gym-sensore-bucket.s3.ap-south-1.amazonaws.com/${latestData.userID.toLowerCase()}.jpeg`} alt="S3 Image" />} variant="faded">
