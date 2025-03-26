@@ -274,7 +274,7 @@ const LiveTrack = () => {
                         </Chip>
                       )}
                       <Card className="bg-slate-200 dark:bg-slate-800 p-5"><TreadmillIcon className={latestData.led === "green" ? "text-green-600" : latestData.led === "blue" ? "text-blue-600" : "text-red-600"} /></Card>
-                      <p>T-00</p>
+                      <p>T-1</p>
                     </div>
                   )}
                 {modalContent.map((machine) => (
