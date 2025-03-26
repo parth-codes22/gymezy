@@ -105,7 +105,7 @@ const AdminLiveTrack = () => {
         .get("/get_update")
         .then((res) => {
           setData(res.data);
-          setLatestData(res.data[res.data.length - 3]);
+          setLatestData(res.data[res.data.length - 1]);
           console.log(res.data);
         })
         .catch((err) => console.error("Error fetching data:", err));
